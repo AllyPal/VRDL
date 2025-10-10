@@ -15,13 +15,14 @@ As root:
 
 # Run
 
+A systemd service is created to handle starting and stopping server instances.  
+
 **Start**: systemctl start vrdl  
 **Stop**: systemctl stop vrdl  
 
 **Enable Startup**: systemctl enable vrdl  
 **Disable Startup**: systemctl disable vrdl  
 
-A systemd service is created to handle starting and stopping server instances.
 
 The "vrdl-runner" script currently handles configuration and running of individual server instances.
 
