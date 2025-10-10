@@ -1,7 +1,7 @@
 
 # Purpose
 
-Sets up device to work as dedicated server for Splinter Cell Chaos Theory Versus 
+Sets up device to work as dedicated server for Splinter Cell Chaos Theory Versus.
 
 # Configuration
 
@@ -15,9 +15,9 @@ as root:
 
 # Run
 
-A systemd service is created to handle starting and stopping the vrdl-runner script.
+A systemd service is created to handle starting and stopping server instances.
 
-The "vrdl-runner" script currently handled configuration and running of individual server instances.
+The "vrdl-runner" script currently handles configuration and running of individual server instances.
 
 Edit the "servers" list in vrdl-runner to add or remove server instances that will be started by vrdl-runner.
 Each line should be a command as if handed to Windows CMD. Use existing entries to model additional entries.
