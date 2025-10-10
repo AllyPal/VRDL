@@ -16,6 +16,7 @@ As root:
 # Run
 
 Start: systemctl start vrdl
+
 Stop: systemctl stop vrdl
 
 A systemd service is created to handle starting and stopping server instances.
