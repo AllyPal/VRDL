@@ -29,7 +29,7 @@ The dedicated server instance(s) runs underneath headless Sway and Xwayland.
 - Updates server
 - Creates standard user 
 - Installs required dependancies
-- Downloads the game files
+- Downloads game content (must provide URI to content in .env)
 - Creates systemd services to start server instances on boot
 - Configures 1x1 virtual display in Sway (this seems to work, and lowers memory footprint)
 - Provides status script to output the window title of the dedicated server cmd window (holds fps and player count stat)
