@@ -1,6 +1,9 @@
 setup_service() {
 
-## Systemd service creation
+	## Systemd service creation
+
+	vrdl_start_basename=${VRDL_START%.*}
+	vrdl_runner_basename=${VRDL_RUNNER%.*}
 
 	service_content=$(cat <<-EOF
 		[Unit]
@@ -12,9 +15,9 @@ setup_service() {
 		[Service]
 		Type=simple
 		User="$VRDL_STANDARD_USER"
-		ExecStart=sh "$VRDL_SCRIPTS_PATH/$VRDL_START"
+		ExecStart="$vrdl_start_basename"
 		ExecStop=pkill sway
-		ExecStop=pkill "$VRDL_RUNNER"
+		ExecStop=pkill "$vrdl_runner_basename"
 		PAMName=Login
 		Restart=on-failure
 		RestartSec=1
@@ -51,7 +54,7 @@ setup_service() {
 
 	# Enable systemd service
 
-	response=$(prompt "Enable systemd service (auto start on boot)? (y/n)")
+	response=$(prompt "Enable systemd service (auto start on boot)?")
 
 	if [ $response = "y" ]; then
 		log 0 "Enabling Service ..."
