@@ -14,7 +14,7 @@ setup_service() {
 
 		[Service]
 		Type=simple
-		User=$VRDL_STANDARD_USER
+		User=$VRDL_USER
 		ExecStart=$vrdl_start_basename
 		ExecStop=pkill sway
 		ExecStop=pkill $vrdl_runner_basename

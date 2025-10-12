@@ -23,9 +23,11 @@ setup_content() {
 
 	# Extract
 
-	package_content="$(ls $tempdir | grep '.7z')"
-	7z x -o"$tempdir_x" "$tempdir/$package_content" 
+	package_content="$(ls "$tempdir"/*.7z)"
 
+	7z x -o"$tempdir_x" "$package_content" -y
+	
+	# If parent dir, copy from inside parent dir, else copy all files in archive root
 	dirs=$(find "$tempdir_x" -mindepth 1 -maxdepth 1 -type d | wc -l)
 	if [ "$dirs" -eq 1 ]; then
 		dir=$(find "$tempdir_x" -mindepth 1 -maxdepth 1 -type d)
@@ -36,13 +38,25 @@ setup_content() {
 
 	# Prepare for retrieving dedi support package
 	rm -r "$tempdir"/*
+	mkdir "$tempdir_x"
 
 	# If provided dedicated support URI, download and install it
 
 	if [ ! -z "$VRDL_SUPPORT_URI" ]; then
 	    wget -P "$tempdir" "$VRDL_SUPPORT_URI"
+		
 		package_dedi="$(ls "$tempdir"/*.7z)"
-		7z x -o"$VRDL_GAME_DEFAULT_PATH/System" "$package_dedi" -y
+		7z x -o"$tempdir_x" "$package_dedi" -y
+	
+		# If parent dir, copy from inside parent dir, else copy files from archive root
+		dirs=$(find "$tempdir_x" -mindepth 1 -maxdepth 1 -type d | wc -l)
+		if [ "$dirs" -eq 1 ]; then
+			dir=$(find "$tempdir_x" -mindepth 1 -maxdepth 1 -type d)
+			cp "$dir"/* -r "$VRDL_GAME_DEFAULT_PATH/System"
+		else
+			cp "$tempdir_x"/* -r "$VRDL_GAME_DEFAULT_PATH/System"
+		fi
+
 	fi
 
 	# Cleanup

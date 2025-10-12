@@ -21,28 +21,39 @@ setup_fs() {
 
 	runtime_dir="runtime"
 
-	cp "$runtime_dir/"* "$VRDL_SCRIPTS_PATH"
-	
-	chown "$VRDL_STANDARD_USER":"$VRDL_STANDARD_USER" "$VRDL_BASE_PATH" -R
+	cp -p "$runtime_dir/"* "$VRDL_SCRIPTS_PATH"
+	cp -p ".env" "$VRDL_SCRIPTS_PATH"	
+
+	chown "$VRDL_USER":"$VRDL_USER" "$VRDL_BASE_PATH" -R
 	
 	# link to bin for convenience and ommit extension (for convenience)
-	if [ ! -e "/usr/local/bin/${VRDL_STATUS%.*}" ]; then
-		ln "$VRDL_SCRIPTS_PATH/$VRDL_STATUS" "/usr/local/bin/${VRDL_STATUS%.*}"
+	if [ -e "/usr/local/bin/${VRDL_STATUS%.*}" ]; then
+		rm "/usr/local/bin/${VRDL_STATUS%.*}"
+	fi
+
+	ln "$VRDL_SCRIPTS_PATH/$VRDL_STATUS" "/usr/local/bin/${VRDL_STATUS%.*}"
+	
+	if [ -e "/usr/local/bin/${VRDL_MONITOR%.*}" ]; then
+		rm "/usr/local/bin/${VRDL_MONITOR%.*}"	
 	fi
 	
-	if [ ! -e "/usr/local/bin/${VRDL_MONITOR%.*}" ]; then
-		ln "$VRDL_SCRIPTS_PATH/$VRDL_MONITOR" "/usr/local/bin/${VRDL_MONITOR%.*}"
+	ln "$VRDL_SCRIPTS_PATH/$VRDL_MONITOR" "/usr/local/bin/${VRDL_MONITOR%.*}"
+
+	if [ -e "/usr/local/bin/${VRDL_START%.*}" ]; then
+		rm "/usr/local/bin/${VRDL_START%.*}"	
 	fi
 
-	if [ ! -e "/usr/local/bin/${VRDL_START%.*}" ]; then
-		ln "$VRDL_SCRIPTS_PATH/$VRDL_START" "/usr/local/bin/${VRDL_START%.*}"
+	ln "$VRDL_SCRIPTS_PATH/$VRDL_START" "/usr/local/bin/${VRDL_START%.*}"
+
+	if [ -e "/usr/local/bin/${VRDL_INIT_DISPLAY%.*}" ]; then
+		rm "/usr/local/bin/${VRDL_INIT_DISPLAY%.*}"	
 	fi
 
-	if [ ! -e "/usr/local/bin/${VRDL_INIT_DISPLAY%.*}" ]; then
-		ln "$VRDL_SCRIPTS_PATH/$VRDL_INIT_DISPLAY" "/usr/local/bin/${VRDL_INIT_DISPLAY%.*}"
+	ln "$VRDL_SCRIPTS_PATH/$VRDL_INIT_DISPLAY" "/usr/local/bin/${VRDL_INIT_DISPLAY%.*}"
+
+	if [ -e "/usr/local/bin/${VRDL_RUNNER%.*}" ]; then
+		rm "/usr/local/bin/${VRDL_RUNNER%.*}"
 	fi
 
-	if [ ! -e "/usr/local/bin/${VRDL_RUNNER%.*}" ]; then
-		ln "$VRDL_SCRIPTS_PATH/$VRDL_RUNNER" "/usr/local/bin/${VRDL_RUNNER%.*}"
-	fi
+	ln "$VRDL_SCRIPTS_PATH/$VRDL_RUNNER" "/usr/local/bin/${VRDL_RUNNER%.*}"
 }

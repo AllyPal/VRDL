@@ -77,12 +77,12 @@ fi
 
 log 0 "Creating null_prf.ini to fix automation bug ..."
 scctv_profile_dir="$VRDL_WINE_PREFIX_PATH/drive_c/ProgramData/Ubisoft/Tom Clancy's Splinter Cell Chaos Theory/Saved Games/Versus"
-su "$VRDL_STANDARD_USER" -c "mkdir -p \"$scctv_profile_dir\""
-su "$VRDL_STANDARD_USER" -c "touch \"$scctv_profile_dir\"/null_prf.ini"
+su "$VRDL_USER" -c "mkdir -p \"$scctv_profile_dir\""
+su "$VRDL_USER" -c "touch \"$scctv_profile_dir\"/null_prf.ini"
 
 ## Ensure dirs owned by standard user
 
-chown "$VRDL_STANDARD_USER":"$VRDL_STANDARD_USER" "$VRDL_BASE_PATH" -R
+chown "$VRDL_USER":"$VRDL_USER" "$VRDL_BASE_PATH" -R
 
 ## Reboot
 
