@@ -33,9 +33,19 @@ setup_os_packages() {
 		log 2 "Deps installation failure"
 	fi
 
-	if [ "$VRDL_GDRIVE_SUPPORT_ENABLE" = "1" ]; then
-		PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install gdown	
+	if [ "$VRDL_GDRIVE_SUPPORT_ENABLE" = "1" ] && [ ! -e "/opt/pipx/venvs/gdown" ]; then
+		log 0 "GDrive support enabled. Installing gdown via pipx ..."
+
+		PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install gdown
+		
+		if [ $? = 0 ]; then
+			log 0 "Gdown installation finished"
+		else
+			log 2 "Gdown failed to install. If Google Drive URI used for content, it will not be downloaded"
+		fi
 	fi
+
+	
 
 	## Disable unattended upgrades
 
