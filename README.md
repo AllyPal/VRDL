@@ -62,5 +62,8 @@ To update the server and content, simply run install.sh again.
 
 ## Support
 
+Reloaded: 3.0+
+Enhanced: 3.6+
+
 Currently only supports Ubuntu Server 24.04
 
