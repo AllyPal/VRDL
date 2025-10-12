@@ -14,8 +14,14 @@ setup_content() {
 		wget "$content_uri" -P "$tempdir"
 
 	elif [ ! -z $VRDL_STATIC_CONTENT_URI ]; then
-		log 0 "Downloading game package at: $VRDL_STATIC_CONTENT_URI ..."
-		wget "$VRDL_STATIC_CONTENT_URI" -P "$tempdir"
+
+	   	if [ "$VRDL_STATIC_CONTENT_URI" != "${VRDL_STATIC_CONTENT_URI#*drive.google}" ] && [ "$VRDL_GDRIVE_SUPPORT_ENABLE" = "1" ]; then
+			log 0 "Downloading game package from GDrive at: $VRDL_STATIC_CONTENT_URI ..."
+			gdown "$VRDL_STATIC_CONTENT_URI" -O "$tempdir/content.7z"
+		else
+			log 0 "Downloading game package at: $VRDL_STATIC_CONTENT_URI ..."
+			wget "$VRDL_STATIC_CONTENT_URI" -P "$tempdir"
+		fi
 	else
 		log 2 "VRDL_LATEST_CONTENT_URI or VRDL_STATIC_CONTENT_URI must be set in .env"
 		return 0
@@ -43,7 +49,13 @@ setup_content() {
 	# If provided dedicated support URI, download and install it
 
 	if [ ! -z "$VRDL_SUPPORT_URI" ]; then
-	    wget -P "$tempdir" "$VRDL_SUPPORT_URI"
+	   	if [ "$VRDL_SUPPORT_URI" != "${VRDL_SUPPORT_URI#*drive.google}" ] && [ "$VRDL_GDRIVE_SUPPORT_ENABLE" = "1" ]; then
+			log 0 "Downloading dedi support package from GDrive at: $VRDL_SUPPORT_URI"
+			gdown "$VRDL_SUPPORT_URI" -O "$tempdir/dedi_support.7z"
+		else
+			log 0 "Downloading dedi support package at: $VRDL_SUPPORT_URI"
+			wget -P "$tempdir" "$VRDL_SUPPORT_URI"
+		fi
 		
 		package_dedi="$(ls "$tempdir"/*.7z)"
 		7z x -o"$tempdir_x" "$package_dedi" -y

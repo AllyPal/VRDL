@@ -33,6 +33,10 @@ setup_os_packages() {
 		log 2 "Deps installation failure"
 	fi
 
+	if [ "$VRDL_GDRIVE_SUPPORT_ENABLE" = "1" ]; then
+		PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install gdown	
+	fi
+
 	## Disable unattended upgrades
 
 	response=$(prompt "Remove apt unattended upgrades?")
