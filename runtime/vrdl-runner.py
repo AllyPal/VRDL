@@ -9,14 +9,13 @@ import threading
 WINE_PREFIX="/opt/vrdl/prefix"
 
 servers = [
-    r'"/opt/vrdl/game/default/System/Dedicated_Server.exe" -dedicated -profile server1 -hide3d query_port 9000 -game_port 8000 -map_playlist Standard -ticks 100',
-    r'"/opt/vrdl/game/default/System/Dedicated_Server.exe" -dedicated -profile server2 -hide3d query_port 9001 -game_port 8001 -map_playlist Standard -ticks 100',
+    r'"/opt/vrdl/game/default/System/Dedicated_Server.exe" -dedicated -profile Test-1 -hide3d -query_port 7776 -game_port 8888 -map_playlist Standard -ticks 100',
 ]
 
 def launch_and_monitor(cmd):
     while True:
         print(f"Starting: {cmd}")
-        proc = subprocess.Popen(f"WINEPREFIX={WINE_PREFIX} wine {cmd}", shell=True)
+        proc = subprocess.Popen(f"WINEPREFIX={WINE_PREFIX} WINEDEBUG=-all wine {cmd}", shell=True)
         proc.wait()
         print(f"Process exited, restarting: {cmd}")
         time.sleep(10)
